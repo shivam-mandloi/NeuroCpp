@@ -10,14 +10,14 @@
 Usage:
     numpy<LONG> np2 = {1,2,3};
     numpy<LONG> np1 = {2,3,4};
-    print << (np1 * np2) << end;
+    cout << (np1 * np2) << end;
     LONG var = 2;
     np1 =  np1 * var;
     np1 = np1 + np2;
-    print << np1 << end;
-    print << (np2 - np1) << end;
-    print << (np1 * -1) << end;
-    print << "Norm " << np1.norm() << end;
+    cout << np1 << end;
+    cout << (np2 - np1) << end;
+    cout << (np1 * -1) << end;
+    cout << "Norm " << np1.norm() << end;
 */
 
 template <typename T>
