@@ -5,7 +5,6 @@
 
 #include "numpy.hpp"
 #include "BlockType.hpp"
-#include "RNNBaseClass.hpp"
 
 
 class Adam : public RNNBaseClass
@@ -13,8 +12,7 @@ class Adam : public RNNBaseClass
 public:
     Adam()
     {
-        type = Optimizer;
-        name = "Adam";
+
     }
 
     std::string GetName() const override
@@ -22,6 +20,16 @@ public:
         return name;
     }
 
+    BlockType GetType() const override
+    {
+        return type;
+    }
+
+    void Forward()
+    {
+        std::cout << "hello from: " << name << std::endl;
+    }
 private:
-    
+    BlockType type = Optimizer;
+    std::string name = "Adam";
 };

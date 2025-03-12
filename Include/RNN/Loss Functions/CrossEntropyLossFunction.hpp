@@ -17,20 +17,19 @@ public:
         name = "CrossEntropy";
     }
 
-    void SoftmaxSpecificFunction()
-    {
-        std::cout << "yes work!!" << " ";
-    }
-    
     std::string GetName() const override
     {
-        SoftmaxSpecificFunction();
         return name;
     }
 
     BlockType GetType() const override
     {
         return type;
+    }
+
+    void Forward()
+    {
+        std::cout << "hello from: " << name << std::endl;
     }
 
 private:

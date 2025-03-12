@@ -13,8 +13,6 @@ class SGD : public RNNBaseClass
 public:
     SGD()
     {
-        type = Optimizer;
-        name = "SGD";
     }
 
     std::string GetName() const override
@@ -28,5 +26,7 @@ public:
     }
 
 private:
+    BlockType type = Optimizer;
+    std::string name = "SGD";
     
 };

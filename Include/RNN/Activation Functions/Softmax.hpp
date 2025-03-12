@@ -20,6 +20,15 @@ public:
     {
         return name;
     }
+    BlockType GetType() const override
+    {
+        return type;
+    }
+
+    void Forward()
+    {
+        std::cout << "hello from: " << name << std::endl;
+    }
 
 private:
     

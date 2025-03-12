@@ -4,7 +4,7 @@
 #include "BlockType.hpp"
 
 /*
-    Inherit by all the block class in RNN, so that we can create vector of class pointer
+    Inherit by all the block class in RNN. To have common parent
 */
 
 
@@ -14,6 +14,7 @@ public:
     RNNBaseClass(){}
     virtual std::string GetName() const = 0;
     virtual BlockType GetType() const = 0;
+    virtual void Forward() = 0;
 protected:
     BlockType type;
     std::string name;

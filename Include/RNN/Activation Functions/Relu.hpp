@@ -26,6 +26,11 @@ public:
         return type;
     }
 
+    void Forward()
+    {
+        std::cout << "forword from: " << name << std::endl;
+    }
+
 private:
     
 };

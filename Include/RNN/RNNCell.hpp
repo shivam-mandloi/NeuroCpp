@@ -16,28 +16,25 @@
 #include "Neuron.hpp"
 
 
-class RNN
-{   
+class RNNCell
+{
 public:
-    RNN()
+    RNNCell()
     {
 
     }
-    
-    void AddBlock(std::unique_ptr<RNNBaseClass> block)
-    {
-        blocks.push_back(std::move(block));
-    }
 
-    void PrintALLBlock()
+    void Forward()
     {
-        for(int i = 0; i < blocks.size(); i++)
-        {
-            std::cout << blocks[i]->GetName() << " ";
-        }
-        std::cout << std::endl;
     }
 
 private:
-    numpy<std::unique_ptr<RNNBaseClass>> blocks = {};
+    Neuron E;
+    Neuron V;
+    Neuron U;
+    Relu reluFunc;
+    Softmax sfFunc;
+    CrossEntropy lossFunc;
+    Adam admOpt;
 };
+
