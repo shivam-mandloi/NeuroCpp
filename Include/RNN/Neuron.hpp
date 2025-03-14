@@ -29,7 +29,10 @@ public:
     
     void Forward()
     {
-        std::cout << "hello from: " << name << std::endl;
+        std::cout << weight << std::endl;
+        std::cout << bias << std::endl;
     }
 private:
+    numpy<numpy<double>> weight = rand(2,3);
+    numpy<double> bias = rand(3);
 };

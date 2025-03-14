@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+
 #include "numpy.hpp"
 #include "BlockType.hpp"
 #include "RNNBaseClass.hpp"
@@ -25,11 +26,18 @@ public:
         return type;
     }
 
-    void Forward()
+    numpy<double> Forward(numpy<double> input)
     {
-        std::cout << "hello from: " << name << std::endl;
+        input.clip(-200, 200); // clip between -200 to 200
+        input.exp(); // exp to all elements
+        double total = input.sum(); // sum all the element of input
+        for(int i = 0; i < input.size(); i++)
+        {
+            input[i] = input[i] / total;
+        }
+        return input;
     }
 
-private:
-    
+    private:
+    double e = 2.718281828435;
 };

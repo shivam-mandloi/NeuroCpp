@@ -6,5 +6,7 @@
 
 int main()
 {
+    Neuron nn;
+    nn.Forward();
     return 0;
 }

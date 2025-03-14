@@ -26,9 +26,14 @@ public:
         return type;
     }
 
-    void Forward()
+    numpy<double> Forward(numpy<double> input)
     {
-        std::cout << "forword from: " << name << std::endl;
+        for(int i = 0; i < input.size(); i++)
+        {
+            if (input[i] < 0)
+                input[i] = 0;
+        }
+        return input;
     }
 
 private:

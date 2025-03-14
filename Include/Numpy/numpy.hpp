@@ -3,7 +3,9 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <math.h>
+#include <cmath>
+#include <cstdlib> 
+#include <ctime>
 
 
 /*
@@ -107,7 +109,43 @@ public:
         }
         return pow(val, 1.0 / 2);
     }
+
+    double clip(double a, double b)
+    {
+        // c if a <= c <= b else either a or b based on which is clouser then other
+        for(int i = 0; i < this->size(); i++)
+        {
+            if ((*this)[i] < a)
+                (*this)[i] = a;
+            if ((*this)[i] > b)
+                (*this)[i] = b;
+        }
+    }
+
+    double exp()
+    {
+        // exponential of numpy array
+        for(int i = 0; i < this->size(); i++)
+        {
+            (*this)[i] = std::exp((*this)[i]);
+        }
+    }
+
+    double sum()
+    {
+        double total = 0;
+        for(int i = 0; i < this->size(); i++)
+        {
+            total += (*this)[i];
+        }
+        return total;
+    }
+
+private:
+
 };
+
+// Additional Functions
 
 template <typename T>
 std::ostream &operator<<(std::ostream &os, const numpy<T> &npy)
@@ -128,4 +166,33 @@ std::ostream &operator<<(std::ostream &os, const numpy<T> &npy)
     {
         std::cerr << e.what() << '\n';
     }
+}
+
+numpy<double> rand(int a)
+{
+    numpy<double> res;
+    std::srand(std::time(0));
+    for(int i = 0; i < a; i++)
+    {
+        double ele = rand() %5;
+        res.push_back(ele / 5);
+    }    
+    return res;
+}
+
+numpy<numpy<double>> rand(int a, int b)
+{
+    numpy<numpy<double>> res;
+    std::srand(std::time(0));
+    for(int i = 0; i < a; i++)
+    {
+        numpy<double> temp;
+        for(int j = 0; j < b; j++)
+        {
+            double ele = rand() % 5;
+            temp.push_back(ele / 5);
+        }
+        res.push_back(temp);
+    }
+    return res;
 }

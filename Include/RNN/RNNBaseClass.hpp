@@ -14,7 +14,6 @@ public:
     RNNBaseClass(){}
     virtual std::string GetName() const = 0;
     virtual BlockType GetType() const = 0;
-    virtual void Forward() = 0;
 protected:
     BlockType type;
     std::string name;
