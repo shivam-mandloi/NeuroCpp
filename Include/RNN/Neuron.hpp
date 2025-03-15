@@ -6,15 +6,18 @@
 #include "numpy.hpp"
 #include "BlockType.hpp"
 #include "RNNBaseClass.hpp"
+#include "NumpyHelpingFunc.hpp"
 
 
 class Neuron : public RNNBaseClass
 {   
 public:
-    Neuron()
+    Neuron(int inputSize, int OutputSize)
     {
         type = NeuronBlock;
         name = "Neuron";
+        weight = rand(OutputSize, inputSize);
+        bias = rand(OutputSize);
     }
 
     std::string GetName() const override
@@ -27,12 +30,12 @@ public:
         return type;
     }
     
-    void Forward()
+    numpy<double> Forward(numpy<double> input)
     {
-        std::cout << weight << std::endl;
-        std::cout << bias << std::endl;
+        return hf.MatMul(weight, input) + bias;
     }
 private:
-    numpy<numpy<double>> weight = rand(2,3);
-    numpy<double> bias = rand(3);
+    numpy<numpy<double>> weight;
+    numpy<double> bias;
+    NpHelpingFunc hf;
 };

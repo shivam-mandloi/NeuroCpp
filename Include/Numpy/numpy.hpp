@@ -182,6 +182,7 @@ numpy<double> rand(int a)
 
 numpy<numpy<double>> rand(int a, int b)
 {
+    //  matrix shape => a X b
     numpy<numpy<double>> res;
     std::srand(std::time(0));
     for(int i = 0; i < a; i++)

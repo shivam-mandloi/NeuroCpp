@@ -29,9 +29,9 @@ public:
     }
 
 private:
-    Neuron E;
-    Neuron V;
-    Neuron U;
+    // Neuron E;
+    // Neuron V;
+    // Neuron U;
     Relu reluFunc;
     Softmax sfFunc;
     CrossEntropy lossFunc;
