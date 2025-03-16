@@ -19,9 +19,10 @@
 class RNNCell
 {
 public:
-    RNNCell()
+    RNNCell(int EmbeddingSize, int VocabSize, int hiddenLayerSize, int OuputSize = -1)
+    : E(EmbeddingSize, VocabSize), V(hiddenLayerSize, hiddenLayerSize), U(hiddenLayerSize, hiddenLayerSize)
     {
-
+        
     }
 
     void Forward()
@@ -29,9 +30,9 @@ public:
     }
 
 private:
-    // Neuron E;
-    // Neuron V;
-    // Neuron U;
+    Neuron E;
+    Neuron V;
+    Neuron U;
     Relu reluFunc;
     Softmax sfFunc;
     CrossEntropy lossFunc;
