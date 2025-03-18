@@ -12,12 +12,13 @@
 class Neuron : public RNNBaseClass
 {   
 public:
-    Neuron(int inputSize, int OutputSize)
+    Neuron(int inputSize, int OutputSize, double _lr = 0.001)
     {
         type = NeuronBlock;
         name = "Neuron";
         weight = rand(OutputSize, inputSize);
         bias = rand(OutputSize);
+        lr = _lr;
     }
 
     std::string GetName() const override
@@ -52,7 +53,7 @@ public:
 
                 x = [x1, x2, . . . ., xn] column vector
 
-                b = [b1, b2, . . . ., bm] row vector
+                b = [b1, b2, . . . ., bm] column vector
             
             y = [w11*x1 + w12*x2 + . . . . + w1n*xn + b1,
                 w21*x1 + w22*x2 + . . . . + w2n*xn + b2,
@@ -102,13 +103,14 @@ public:
             prevGrad = [p1, p2, . . . ., pm] row vector
 
             changeInWeightMatrix (W) => prevGrad @ dy/dw
-            changeInWeightMatrix (W) => [p1,
-                                        p2,   
-                                        .
-                                        .      @  [x1, x2, . . . ., xn]
-                                        . 
-                                        .,
-                                        pm]
+                                       
+                                           [p1,
+                                            p2,   
+                                            .
+            changeInWeightMatrix (W) =>     .     @   [x1, x2, . . . ., xn]
+                                            . 
+                                            .,
+                                            pm]
 
             changeInBias (b) => prevGrad @ I
                                 I => Identity matrix of size m X m
@@ -117,26 +119,56 @@ public:
 
             nextGrad => prevGrad @ dy/dx
 
-            dy/dx = [[d/dx1 (w11*x1 + w12*x2 + . . . . + w1n*xn + b1), d/dx2 (w11*x1 + w12*x2 + . . . . + w1n*xn + b1), . . . ., d/dxn (w11*x1 + w12*x2 + . . . . + w1n*xn + b1) ],
-                    [[d/dx1 (w21*x1 + w22*x2 + . . . . + w2n*xn + b2), d/dx2 (w21*x1 + w22*x2 + . . . . + w2n*xn + b2), . . . ., d/dxn (w21*x1 + w22*x2 + . . . . + w2n*xn + b2)],
-                    .
-                    .
-                    .
-                    .
-                    [[d/dx1 (wm1*x1 + wm2*x2 + . . . . + wmn*xn + bm), d/dx2 (wm1*x1 + wm2*x2 + . . . . + wmn*xn + bm), . . . ., d/dxn (wm1*x1 + wm2*x2 + . . . . + wmn*xn + bm)]
+            dy/dx = [
+                        [d/dx1 (w11*x1 + w12*x2 + . . . . + w1n*xn + b1), d/dx2 (w11*x1 + w12*x2 + . . . . + w1n*xn + b1), . . . ., d/dxn (w11*x1 + w12*x2 + . . . . + w1n*xn + b1) ],
+                        [d/dx1 (w21*x1 + w22*x2 + . . . . + w2n*xn + b2), d/dx2 (w21*x1 + w22*x2 + . . . . + w2n*xn + b2), . . . ., d/dxn (w21*x1 + w22*x2 + . . . . + w2n*xn + b2)],
+                        .
+                        .
+                        .
+                        .
+                        [d/dx1 (wm1*x1 + wm2*x2 + . . . . + wmn*xn + bm), d/dx2 (wm1*x1 + wm2*x2 + . . . . + wmn*xn + bm), . . . ., d/dxn (wm1*x1 + wm2*x2 + . . . . + wmn*xn + bm)]
                     ]
 
-            dy/dx => [[w11, w12, . . . ., w1n],
+            dy/dx = [[w11, w12, . . . ., w1n],
                     [w21, w22, . . . ., w2n],
                     .
                     .
                     .
                     .
-                    [wm1, wm2, . . . ., wmn]
-                    ]
-        */
-       
+                    [wm1, wm2, . . . ., wmn]]
+        */    
+        numpy<numpy<double>> changeInWeight(prevGrad.size(), numpy<double>(saveInput.size(), 0.0));
 
+        for(int i = 0; i < prevGrad.size(); i++)
+        {
+            for(int j = 0; j < saveInput.size(); j++)
+            {
+                changeInWeight[i][j] = prevGrad[i] * saveInput[j]; // find the grad of loss wrt weights
+            }
+        }
+        
+        numpy<double> nextGrad(saveInput.size(), 0); 
+        for(int i = 0; i < saveInput.size(); i++) 
+        {
+            double temp = 0.0;
+            for(int j = 0; j < prevGrad.size(); j++)
+            {
+                temp += (prevGrad[j] * weight[j][i]);// grad for previous layer
+            }
+            nextGrad[i] = temp;
+        }
+
+        // change the parameters
+        for(int i = 0; i < weight.size(); i++)
+        {
+            for(int j = 0; j < weight[i].size(); j++)
+            {
+                weight[i][j] -= (lr * changeInWeight[i][j]);
+            }
+            bias[i] -= (lr * prevGrad[i]); // change in bias is prevgrad @ Identity matrix, which make prevGrad to column matrix
+        }
+
+        return nextGrad;
     }
 
 private:
@@ -144,4 +176,5 @@ private:
     numpy<double> bias;
     NpHelpingFunc hf;
     numpy<double> saveInput;
+    double lr;
 };
