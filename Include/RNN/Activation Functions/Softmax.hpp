@@ -47,13 +47,14 @@ public:
 
             => Y = [exp(x1)/sigma(i, xi), . . . ., exp(xn)/sigma(i, xi)]
 
-            => dy/dx = [[d/dx1 (exp(x1)/sigma(i, xi)), . . . . ., d/dxn (exp(x1)/sigma(i, xi))],
-                        [d/dx1 (exp(x2)/sigma(i, xi)), . . . . ., d/dxn (exp(x2)/sigma(i, xi))],
-                        .
-                        .
-                        .
-                        [d/dx1 (exp(xn)/sigma(i, xi)), . . . . ., d/dxn (exp(xn)/sigma(i, xi))]
-                    ]
+            => dy/dx = [
+                            [d/dx1 (exp(x1)/sigma(i, xi)), . . . . ., d/dxn (exp(x1)/sigma(i, xi))],
+                            [d/dx1 (exp(x2)/sigma(i, xi)), . . . . ., d/dxn (exp(x2)/sigma(i, xi))],
+                            .
+                            .
+                            .
+                            [d/dx1 (exp(xn)/sigma(i, xi)), . . . . ., d/dxn (exp(xn)/sigma(i, xi))]
+                        ]
             d/dxi (exp(xi)/sigma(j, exp(xj))) => p[i](1 - p[i]) => -p[i] * (p[i] - 1)
             d/dxi (exp(xj)/sigma(j, exp(xj))) => -p[i] * p[j]
         */
@@ -61,7 +62,7 @@ public:
         numpy<double> grad(saveProb.size(), 0);
         for(int i = 0; i < prevGrad.size(); i++)
         {
-            if(prevGrad[i] == 0) // if prevGrad[i] = 0 then hole row will of softmax grad will be zero
+            if(prevGrad[i] == 0) // if prevGrad[i] = 0 then whole row will of softmax grad will be zero
                 continue;
             numpy<double> copyProb(saveProb); // copy forward pass probability
             double pi = -copyProb[i]; // save p[i] element

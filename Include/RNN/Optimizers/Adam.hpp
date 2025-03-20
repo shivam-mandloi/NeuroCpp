@@ -25,9 +25,9 @@ public:
         return type;
     }
 
-    void Forward()
+    void Update(numpy<numpy<double>> *weight, numpy<double> *bias, numpy<numpy<double>> weightChange, numpy<double> *biasChange)
     {
-        std::cout << "hello from: " << name << std::endl;
+        
     }
 private:
     BlockType type = Optimizer;

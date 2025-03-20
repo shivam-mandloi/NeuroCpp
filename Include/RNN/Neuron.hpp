@@ -7,18 +7,20 @@
 #include "BlockType.hpp"
 #include "RNNBaseClass.hpp"
 #include "NumpyHelpingFunc.hpp"
+#include "Optim.hpp"
 
 
 class Neuron : public RNNBaseClass
 {   
 public:
-    Neuron(int inputSize, int OutputSize, double _lr = 0.001)
+    Neuron(int inputSize, int OutputSize, OptimType _optType = SGDOptim, double _lr = 0.001)
     {
         type = NeuronBlock;
         name = "Neuron";
         weight = rand(OutputSize, inputSize);
         bias = rand(OutputSize);
-        lr = _lr;
+        opt.type = _optType; // change default optimization type
+        opt.lr = _lr; // change default leraning rate 
     }
 
     std::string GetName() const override
@@ -153,21 +155,12 @@ public:
             double temp = 0.0;
             for(int j = 0; j < prevGrad.size(); j++)
             {
-                temp += (prevGrad[j] * weight[j][i]);// grad for previous layer
+                temp += (prevGrad[j] * weight[j][i]);// grad for next layer
             }
             nextGrad[i] = temp;
         }
 
-        // change the parameters
-        for(int i = 0; i < weight.size(); i++)
-        {
-            for(int j = 0; j < weight[i].size(); j++)
-            {
-                weight[i][j] -= (lr * changeInWeight[i][j]);
-            }
-            bias[i] -= (lr * prevGrad[i]); // change in bias is prevgrad @ Identity matrix, which make prevGrad to column matrix
-        }
-
+        opt.step(&weight, &bias, changeInWeight, prevGrad); // update change according to optimizer
         return nextGrad;
     }
 
@@ -176,5 +169,6 @@ private:
     numpy<double> bias;
     NpHelpingFunc hf;
     numpy<double> saveInput;
-    double lr;
+    // double lr;
+    Optim opt;
 };
