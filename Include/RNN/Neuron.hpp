@@ -17,8 +17,10 @@ public:
     {
         type = NeuronBlock;
         name = "Neuron";
-        weight = rand(OutputSize, inputSize);
-        bias = rand(OutputSize);
+        weight = hf.rand(OutputSize, inputSize);
+        bias = hf.rand(OutputSize);
+        std::cout << weight.size() << " " << weight[0].size() << std::endl;
+        std::cout << bias.size() << std::endl;
         opt.type = _optType; // change default optimization type
         opt.lr = _lr; // change default leraning rate 
     }
