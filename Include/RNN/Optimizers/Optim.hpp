@@ -22,7 +22,7 @@ public:
     {
         if(type == SGDOptim)
         {
-
+            sgd.Update(weight, bias, weightChange, biasChange, lr);
         }
 
         else if(type == AdamOptim)
@@ -33,6 +33,11 @@ public:
         else if(type = AdaGradOptim)
         {
 
+        }
+
+        else
+        {
+            std::cout << "Not Exist" << std::endl;
         }
     }
 private:

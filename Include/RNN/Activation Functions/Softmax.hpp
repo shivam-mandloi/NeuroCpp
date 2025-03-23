@@ -71,7 +71,7 @@ public:
             for(int j = 0; j < saveProb.size(); j++) 
             {
                 copyProb[j] *= pi;
-                grad[j] += copyProb[j];
+                grad[j] += (prevGrad[i] * copyProb[j]);
             }
         }
         return grad;

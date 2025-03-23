@@ -159,7 +159,7 @@ public:
             }
             nextGrad[i] = temp;
         }
-
+        
         opt.step(&weight, &bias, changeInWeight, prevGrad); // update change according to optimizer
         return nextGrad;
     }
@@ -169,6 +169,5 @@ private:
     numpy<double> bias;
     NpHelpingFunc hf;
     numpy<double> saveInput;
-    // double lr;
     Optim opt;
 };

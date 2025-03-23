@@ -14,7 +14,7 @@ struct nn
     Neuron nn3;
     Softmax sf;
     CrossEntropy ls;
-    nn() : nn1(4, 8), nn2(8, 6), nn3(6, 3){}
+    nn() : nn1(4, 10, SGDOptim, 0.0001), nn2(10, 10), nn3(10, 3, SGDOptim, 0.1) {}
 
     numpy<double> Forward(numpy<double> input)
     {
@@ -26,14 +26,16 @@ struct nn
         nn1.BackPropagate(rl1.BackPropagate(nn2.BackPropagate(rl2.BackPropagate(nn3.BackPropagate(sf.BackPropagate(ls.BackPropagate(pred, actual)))))));
     }
 
-    double loss(numpy<double> input, int index)
+    double loss(numpy<double> input, int index, bool check = 1)
     {
         numpy<double> actual(input.size(), 0);
         actual[index] = 1;
+        std::cout << "predicted: " << input << " Actual: " << actual <<std::endl;
+        if (check)
+            BackPropagate(input, actual);
         return ls.Forward(input, actual);
     }
 };
-
 
 int main()
 {
@@ -43,10 +45,10 @@ int main()
     numpy<numpy<double>> data;
     numpy<double> temp = {};
 
-    for(int i = 0; i < dataStr.size(); i++)
+    for (int i = 0; i < dataStr.size(); i++)
     {
         temp.push_back(dataStr[i]);
-        if(temp.size() == 5)
+        if (temp.size() == 5)
         {
             data.push_back(temp);
             temp = {};
@@ -54,11 +56,22 @@ int main()
     }
 
     nn network;
-    for(int i = 0; i < data.size(); i++)
+    for (int epoch = 0; epoch < 10; epoch++)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            numpy<double> input = {data[i][0], data[i][1], data[i][2], data[i][3]};
+            int target = data[i][4];
+            double ls = network.loss(network.Forward(input), target);
+            std::cout << "Epoch: " << epoch + 1 << " | " << "Loss: " << ls <<  std::endl;
+        }
+    }
+    std::cout << "Testing: " << std::endl;
+    for (int i = 0; i < 100; i++)
     {
         numpy<double> input = {data[i][0], data[i][1], data[i][2], data[i][3]};
         int target = data[i][4];
-        double ls = network.loss(network.Forward(input), target);
+        double ls = network.loss(network.Forward(input), target, false);
         std::cout << ls << std::endl;
     }
     return 0;
