@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdlib>
 #include <string>
 #include "numpy.hpp"
@@ -116,5 +118,27 @@ public:
         }
 
         return vec;
+    }
+
+    std::string ReadFile(std::string path)
+    {
+        std::fstream newFile;
+        std::string temp;
+        std::string data = "";
+
+        newFile.open(path, std::ios::in);
+        if (!newFile.is_open())
+        {
+            std::cerr << "Error: Could not open file " << path << std::endl;
+            exit(0);
+        }
+
+        while (getline(newFile, temp))
+        {
+            if (temp != "")
+                data += temp + " ";
+        }
+
+        return data;
     }
 };
