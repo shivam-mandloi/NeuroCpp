@@ -5,10 +5,10 @@
 
 #include "numpy.hpp"
 #include "BlockType.hpp"
-#include "RNNBaseClass.hpp"
+#include "BaseClass.hpp"
 
 
-class SGD : public RNNBaseClass
+class SGD : public BaseClass
 {   
 public:
     SGD()

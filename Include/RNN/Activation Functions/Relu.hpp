@@ -5,9 +5,9 @@
 
 #include "numpy.hpp"
 #include "BlockType.hpp"
-#include "RNNBaseClass.hpp"
+#include "BaseClass.hpp"
 
-class Relu : public RNNBaseClass
+class Relu : public BaseClass
 {   
 public:
     Relu()

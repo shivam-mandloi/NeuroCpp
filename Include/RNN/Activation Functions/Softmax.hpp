@@ -6,10 +6,10 @@
 
 #include "numpy.hpp"
 #include "BlockType.hpp"
-#include "RNNBaseClass.hpp"
+#include "BaseClass.hpp"
 
 
-class Softmax : public RNNBaseClass
+class Softmax : public BaseClass
 {   
 public:
     Softmax()

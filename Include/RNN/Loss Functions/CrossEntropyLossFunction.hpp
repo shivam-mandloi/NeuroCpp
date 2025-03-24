@@ -5,10 +5,10 @@
 
 #include "numpy.hpp"
 #include "BlockType.hpp"
-#include "RNNBaseClass.hpp"
+#include "BaseClass.hpp"
 
 
-class CrossEntropy : public RNNBaseClass
+class CrossEntropy : public BaseClass
 {   
 public:
     CrossEntropy()

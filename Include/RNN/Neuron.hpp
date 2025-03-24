@@ -5,12 +5,12 @@
 
 #include "numpy.hpp"
 #include "BlockType.hpp"
-#include "RNNBaseClass.hpp"
+#include "BaseClass.hpp"
 #include "NumpyHelpingFunc.hpp"
 #include "Optim.hpp"
 
 
-class Neuron : public RNNBaseClass
+class Neuron : public BaseClass
 {   
 public:
     Neuron(int inputSize, int OutputSize, OptimType _optType = SGDOptim, double _lr = 0.001)

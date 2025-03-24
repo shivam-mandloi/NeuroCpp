@@ -7,7 +7,7 @@
 #include "BlockType.hpp"
 
 
-class Adam : public RNNBaseClass
+class Adam : public BaseClass
 {   
 public:
     Adam()

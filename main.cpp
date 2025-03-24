@@ -2,8 +2,11 @@
 #include <memory>
 
 #include "numpy.hpp"
-#include "RNN.hpp"
 #include "NumpyHelpingFunc.hpp"
+#include "Neuron.hpp"
+#include "Relu.hpp"
+#include "Softmax.hpp"
+#include "CrossEntropyLossFunction.hpp"
 
 struct nn
 {
@@ -41,7 +44,7 @@ int main()
 {
     NpHelpingFunc hf;
 
-    numpy<double> dataStr = hf.SplitString(hf.ReadFile("C:\\Users\\shiva\\Desktop\\IISC\\temp\\New folder (2)\\Data\\Iris.txt"));
+    numpy<double> dataStr = hf.SplitString(hf.ReadFile("C:\\Users\\shiva\\Desktop\\IISC\\temp\\NeuroCpp\\Data\\Iris.txt"));
     numpy<numpy<double>> data;
     numpy<double> temp = {};
 
