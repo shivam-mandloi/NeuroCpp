@@ -20,6 +20,11 @@ public:
     Optim(OptimType _type = SGDOptim, double _lr = 0.01):type(_type),lr(_lr){}
     void step(numpy<numpy<double>> *weight, numpy<double> *bias, numpy<numpy<double>> weightChange, numpy<double> biasChange)
     {
+        /*
+            type: Decide which optimizer is used like Adam Optim, SGD Optim etc.
+            => Each otpimizer class object is created and used according to what type of optimizer is called
+            => learning rate and type are public variable so can be change any time in code
+        */
         if(type == SGDOptim)
         {
             sgd.Update(weight, bias, weightChange, biasChange, lr);

@@ -31,7 +31,7 @@ public:
     numpy<double> SplitString(std::string str)
     {
         /*
-            take string a = "1,2,3,4,5" and return numpy<double> arr = {1, 2, 3, 4, 5}
+            take string a = "1 2 3 4 5" and return numpy<double> arr = {1, 2, 3, 4, 5} type = double
         */
         numpy<double> arr;
         std::string temp;
@@ -76,7 +76,9 @@ public:
             std::cerr << "Error: Could not open file " << fileName << std::endl;
             exit(0);
         }
+        
         int index = 0;
+        // Read Data in temp variable
         while (getline(newFile, temp))
         {
             if (temp != "")

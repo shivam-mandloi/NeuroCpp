@@ -1,9 +1,7 @@
+import numpy as np
 
-with open('iris.txt', 'r') as f:
-    data = f.read()
+data = np.loadtxt(r"C:\Users\shiva\Desktop\IISC\temp\New folder (2)\Data\Iris.txt")
+np.random.shuffle(data)
+print(data)
 
-data = data.replace(",", " ")
-with open('iris.txt', 'w') as f:
-    f.write(data)
-
-print("[*] Done")
+np.savetxt("Iris.txt", data)
