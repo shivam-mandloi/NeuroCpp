@@ -1,7 +1,7 @@
-# Recurrent Neural Network (RNN) in C++ and Python
+# Neural Network in C++ and Python
 
 ## Overview
-This project implements a Recurrent Neural Network (RNN) using pure C++ without external libraries. However, Python (NumPy) is used for additional processing. The implementation includes modular components for activation functions, loss functions, and optimizers, making it easy to define various neural network architectures.
+This project implements a deep learning library using pure C++ without external libraries. However, Python (NumPy) is used for additional processing. The main goal is to understand neural networks and create a base class that can be used to develop more complex architectures. It enables users to understand and utilize components like `Neuron`, `Softmax`, `CrossEntropyLoss`, etc., to build more advanced neural networks in C++.
 
 ## Project Structure
 Each block of the neural network is implemented as a separate class:
@@ -12,7 +12,7 @@ Each block of the neural network is implemented as a separate class:
 
 Each block has its own `Forward` and `BackPropagate` methods, allowing easy composition of feedforward neural networks (FNNs).
 
-## Example: Feedforward Neural Network (FNN) for Iris Dataset
+## Example: Feedforward Neural Network (FNN) for the Iris Dataset
 
 ```cpp
 struct nn {
@@ -37,7 +37,7 @@ struct nn {
     double loss(numpy<double> input, int index, bool check = 1) {
         numpy<double> actual(input.size(), 0);
         actual[index] = 1;
-        std::cout << "predicted: " << input << " Actual: " << actual << std::endl;
+        std::cout << "Predicted: " << input << " Actual: " << actual << std::endl;
         if (check)
             BackPropagate(input, actual);
         return ls.Forward(input, actual);
@@ -49,7 +49,7 @@ struct nn {
 
 1. **Organizing Files**
    - Place all your C++ files in the `main.cpp` directory.
-   - You may create header files but ensure they are in the same folder as `main.cpp`.
+   - You may create header files, but ensure they are in the same folder as `main.cpp`.
    - If using subfolders, ensure they are inside the directory containing `main.cpp`.
 
 2. **Running the Model**
@@ -82,6 +82,3 @@ struct nn {
 - Adding support for more activation functions and optimizers.
 - Implementing RNN, LSTM, and Transformer models using the same modular approach.
 - Parallelizing computations using multi-threading for faster training.
-
-## License
-This project is open-source. Feel free to modify and use it as needed!
