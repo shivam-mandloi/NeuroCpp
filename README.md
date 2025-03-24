@@ -1,7 +1,7 @@
 # Neural Network in C++ and Python
 
 ## Overview
-This project implements a deep learning library using pure C++ without external libraries. However, Python (NumPy) is used for additional processing. The main goal is to understand neural networks and create a base class that can be used to develop more complex architectures. It enables users to understand and utilize components like `Neuron`, `Softmax`, `CrossEntropyLoss`, etc., to build more advanced neural networks in C++.
+This project implements a deep learning library using pure C++ without external libraries. However, Python (NumPy) is used for additional processing. The main goal is to understand neural networks and create a base class that can be used to develop more complex architectures. It enables me to understand and utilize components like `Neuron`, `Softmax`, `CrossEntropyLoss`, etc., to build more advanced neural networks in C++.
 
 ## Project Structure
 Each block of the neural network is implemented as a separate class:
