@@ -17,7 +17,7 @@ struct nn
     Neuron nn3;
     Softmax sf;
     CrossEntropy ls;
-    nn() : nn1(4, 10, SGDOptim, 0.0001), nn2(10, 10), nn3(10, 3, SGDOptim, 0.1) {}
+    nn() : nn1(4, 10, SGDOptim, 0.001), nn2(10, 10, 10), nn3(10, 3, SGDOptim, 0.001, 10) {}
 
     numpy<double> Forward(numpy<double> input)
     {
@@ -59,7 +59,7 @@ int main()
     }
 
     nn network;
-    for (int epoch = 0; epoch < 10; epoch++)
+    for (int epoch = 0; epoch < 30; epoch++)
     {
         for (int i = 0; i < 100; i++)
         {

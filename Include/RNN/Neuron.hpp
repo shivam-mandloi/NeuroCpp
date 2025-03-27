@@ -9,11 +9,14 @@
 #include "NumpyHelpingFunc.hpp"
 #include "Optim.hpp"
 
+/*
+    will update each matrix-matrix, vector-vector, matrix-scalar and vector-scalar seperate function in numpy class
+*/
 
 class Neuron : public BaseClass
 {   
 public:
-    Neuron(int inputSize, int OutputSize, OptimType _optType = SGDOptim, double _lr = 0.001)
+    Neuron(int inputSize, int OutputSize, OptimType _optType = SGDOptim, double _lr = 0.001, int _batchSize = 1)
     {
         type = NeuronBlock;
         name = "Neuron";
@@ -21,7 +24,13 @@ public:
         bias = hf.rand(OutputSize);
         opt.type = _optType; // change default optimization type
         opt.lr = _lr; // change default leraning rate 
+        avgWeightChange = numpy<numpy<double>>(weight.size(), numpy<double>(weight[0].size(), 0)); // same size as weight matrix
+        avgBiasChange = numpy<double>(bias.size(), 0);
+        currentBatchInput = 1;
+        batchSize = _batchSize;
     }
+
+    Neuron(int inputSize, int outputSize, int _batchSize) : Neuron(inputSize, outputSize, SGDOptim, 0.001, _batchSize) {} // constructor to define only inputSize, ouputSize and batchSize
 
     std::string GetName() const override
     {
@@ -159,8 +168,35 @@ public:
             }
             nextGrad[i] = temp;
         }
+
+        for (int i = 0; i < weight.size(); i++) // Add the parameter to avgWeight and avgBias
+        {
+            for(int j = 0; j < weight[i].size(); j++)
+            {
+                avgWeightChange[i][j] = avgWeightChange[i][j] + changeInWeight[i][j];
+
+            }
+            avgBiasChange[i] = avgBiasChange[i] + prevGrad[i];
+        }
         
-        opt.step(&weight, &bias, changeInWeight, prevGrad); // update change according to optimizer
+        if(currentBatchInput == batchSize) // update the weights
+        {
+            for (int i = 0; i < weight.size(); i++) // average the weight matrix and bias
+            {
+                for(int j = 0; j < weight[i].size(); j++)
+                {
+                    avgWeightChange[i][j] = avgWeightChange[i][j] / batchSize;
+
+                }
+                avgBiasChange[i] = avgBiasChange[i] / batchSize;
+            }
+
+            opt.step(&weight, &bias, avgWeightChange, avgBiasChange); // update change according to optimizer
+            currentBatchInput = 0;
+            avgWeightChange = numpy<numpy<double>>(weight.size(), numpy<double>(weight[0].size(), 0));
+            avgBiasChange = numpy<double>(bias.size(), 0);
+        }
+        currentBatchInput++;
         return nextGrad;
     }
 
@@ -170,4 +206,8 @@ private:
     NpHelpingFunc hf;
     numpy<double> saveInput;
     Optim opt;
+    int currentBatchInput;
+    numpy<numpy<double>> avgWeightChange;
+    numpy<double> avgBiasChange;
+    int batchSize;
 };

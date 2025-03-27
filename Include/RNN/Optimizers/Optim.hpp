@@ -17,7 +17,7 @@ class Optim
 public:
     OptimType type;
     double lr;
-    Optim(OptimType _type = SGDOptim, double _lr = 0.01):type(_type),lr(_lr){}
+    Optim(OptimType _type = SGDOptim, double _lr = 0.001):type(_type),lr(_lr){}
     void step(numpy<numpy<double>> *weight, numpy<double> *bias, numpy<numpy<double>> weightChange, numpy<double> biasChange)
     {
         /*
