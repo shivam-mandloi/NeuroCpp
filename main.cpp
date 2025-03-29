@@ -17,7 +17,7 @@ struct nn
     Neuron nn3;
     Softmax sf;
     CrossEntropy ls;
-    nn() : nn1(4, 10, SGDOptim, 0.001), nn2(10, 10, 10), nn3(10, 3, SGDOptim, 0.001, 10) {}
+    nn() : nn1(4, 10, AdamOptim, 0.001, 10), nn2(10, 10, AdamOptim, 0.001, 10), nn3(10, 3, AdamOptim, 0.001, 10) {}
 
     numpy<double> Forward(numpy<double> input)
     {
@@ -44,7 +44,7 @@ int main()
 {
     NpHelpingFunc hf;
 
-    numpy<double> dataStr = hf.SplitString(hf.ReadFile("C:\\Users\\shiva\\Desktop\\IISC\\temp\\NeuroCpp\\Data\\Iris.txt"));
+    numpy<double> dataStr = hf.SplitString(hf.ReadFile(""));
     numpy<numpy<double>> data;
     numpy<double> temp = {};
 
@@ -59,7 +59,7 @@ int main()
     }
 
     nn network;
-    for (int epoch = 0; epoch < 30; epoch++)
+    for (int epoch = 0; epoch < 25; epoch++)
     {
         for (int i = 0; i < 100; i++)
         {

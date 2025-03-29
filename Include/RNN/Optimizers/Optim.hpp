@@ -32,12 +32,12 @@ public:
 
         else if(type == AdamOptim)
         {
-
+            adm.Update(weight, bias, weightChange, biasChange, lr);
         }
 
         else if(type = AdaGradOptim)
         {
-
+            
         }
 
         else

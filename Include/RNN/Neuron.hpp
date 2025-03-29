@@ -10,7 +10,7 @@
 #include "Optim.hpp"
 
 /*
-    will update each matrix-matrix, vector-vector, matrix-scalar and vector-scalar seperate function in numpy class
+    will update each matrix-matrix, vector-vector, matrix-scalar and vector-scalar operation with seperate function in numpy class
 */
 
 class Neuron : public BaseClass
@@ -29,8 +29,6 @@ public:
         currentBatchInput = 1;
         batchSize = _batchSize;
     }
-
-    Neuron(int inputSize, int outputSize, int _batchSize) : Neuron(inputSize, outputSize, SGDOptim, 0.001, _batchSize) {} // constructor to define only inputSize, ouputSize and batchSize
 
     std::string GetName() const override
     {
@@ -181,6 +179,7 @@ public:
         
         if(currentBatchInput == batchSize) // update the weights
         {
+            std::cout << currentBatchInput << " " << batchSize << std::endl;
             for (int i = 0; i < weight.size(); i++) // average the weight matrix and bias
             {
                 for(int j = 0; j < weight[i].size(); j++)
