@@ -179,7 +179,6 @@ public:
         
         if(currentBatchInput == batchSize) // update the weights
         {
-            std::cout << currentBatchInput << " " << batchSize << std::endl;
             for (int i = 0; i < weight.size(); i++) // average the weight matrix and bias
             {
                 for(int j = 0; j < weight[i].size(); j++)

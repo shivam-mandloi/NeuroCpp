@@ -95,7 +95,6 @@ public:
             (*bias)[i] -= lr * (mtB / vtB);
         }
         timeStep+=1;
-        std::cout << "done " << timeStep << std::endl;
     }
 private:
     BlockType type = Optimizer;
